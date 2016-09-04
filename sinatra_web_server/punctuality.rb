@@ -17,7 +17,7 @@
 #
 # Test that it's working by going to http://localhost:4567/ (the port number is from the Sinatra output just above)
 # Read the code to see other URLs you can access. Look at the data files for valid data ranges.
-# 
+#
 # If you come across issues getting this code to run, please document the issues and how you fixed them - we'd love
 # to see your thought process (and also fix it for others in future!)
 
@@ -28,9 +28,22 @@ rescue LoadError => e
   exit(1)
 end
 
+require 'sinatra/cross_origin'
 require 'date'
 require 'csv'
 require 'json'
+
+# sinatra-cross_orgin gem configuration to allow CORS on all routes
+configure do
+  enable :cross_origin
+end
+
+# As per https://github.com/britg/sinatra-cross_origin#responding-to-options
+options "*" do
+  response.headers["Allow"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"
+  response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+  200
+end
 
 get '/' do
   erb :index
