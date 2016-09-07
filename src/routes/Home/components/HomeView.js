@@ -1,43 +1,54 @@
 import React from 'react'
 import classes from './HomeView.scss'
 import harambe from '../assets/harambe.jpg'
-
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import Panel from 'react-bootstrap/lib/Panel'
 import Image from 'react-bootstrap/lib/Image'
-import forEach from 'lodash/forEach'
 import moment from 'moment'
-
 import PunctualityTable from './PunctualityTable/PunctualityTable'
+import find from 'lodash/find'
 
 export class HomeView extends React.Component {
   constructor(props) {
     super(props)
-    this._formatData = this._formatData.bind(this)
+    this.dayFormatter = this.dayFormatter.bind(this)
+    this.timeFormatter = this.timeFormatter.bind(this)
+    this.trClassFormat = this.trClassFormat.bind(this)
   }
 
-  _formatData(roster) {
+  dayFormatter(cell, row) {
+    return moment(cell).format('MMMM Do YYYY')
+  }
 
-    var formattedData = []
+  timeFormatter(cell, row) {
+    if (cell) {
+      return moment(cell).format('h:mma')
+    }
+    else {
+      return 'No time clocked'
+    }
+  }
 
-    forEach(roster, (item) => {
-      var formattedRosterItem = {}
-      formattedRosterItem.date = moment(item.date).format('MMMM Do YYYY')
-      formattedRosterItem.start = moment(item.start).format('h:mma')
-      formattedRosterItem.finish = moment(item.finish).format('h:mma')
-      formattedData.push(formattedRosterItem)
-    })
-    console.log(formattedData)
-    return formattedData
+  /***
+   * This function formats the invalid rows (i.e. those that have no shift times or no roster times) with a 'danger'
+   * class which makes the row red.
+   * @param rowData - not used for this func
+   * @param rIndex - the index of the row of data
+   * @returns {string}
+   */
+  trClassFormat(rowData, rIndex) {
+    const {invalidDataRowIds} = this.props
+    if (find(invalidDataRowIds, (item) => {
+        return item === rowData.id
+      })) {
+      return 'danger'
+    }
   }
 
   render() {
-    var {roster} = this.props
-    if (roster && (roster.length > 0)) {
-      roster = this._formatData(roster)
-    }
+    var {data} = this.props
 
     var panelHeader = (
       <Row>
@@ -64,7 +75,8 @@ export class HomeView extends React.Component {
             <Panel header={panelHeader}>
               <Row>
                 <Col xs={12}>
-                  <PunctualityTable roster={roster}/>
+                  <PunctualityTable data={data} dayFormatter={this.dayFormatter}
+                                    timeFormatter={this.timeFormatter} trClassFormat={this.trClassFormat}/>
                 </Col>
               </Row>
             </Panel>

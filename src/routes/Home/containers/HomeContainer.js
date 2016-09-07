@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
 import {fetchRosterForDate} from '../modules/roster'
+import {getCombinedData, getInvalidDataRowIds} from '../selectors/punctuality'
 
 import HomeView from '../components/HomeView'
 
@@ -8,7 +9,8 @@ const mapActionCreators = {
 }
 
 const mapStateToProps = (state) => ({
-  roster: state.roster.data
+  data: getCombinedData(state),
+  invalidDataRowIds: getInvalidDataRowIds(state)
 })
 
 export default connect(mapStateToProps, mapActionCreators)(HomeView)

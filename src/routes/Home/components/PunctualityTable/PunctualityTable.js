@@ -3,18 +3,21 @@ import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 
 export const PunctualityTable = (props) => {
-  const {roster} = props
+  const {data, dayFormatter, timeFormatter, trClassFormat} = props
   return (
-    <BootstrapTable data={roster} pagination={true} hover={true} condensed={true}>
-      <TableHeaderColumn dataField="date" isKey={true} dataAlign="center" dataSort={true}>Day</TableHeaderColumn>
-      <TableHeaderColumn dataField="start" dataSort={true}>Rostered Start</TableHeaderColumn>
-      <TableHeaderColumn dataField="finish" dataSort={true}>Rostered Finish</TableHeaderColumn>
+    <BootstrapTable data={data} hover={true} condensed={true} trClassName={trClassFormat}>
+      <TableHeaderColumn dataField="date" isKey={true} dataAlign="center" dataSort={true}
+                         dataFormat={dayFormatter}>Day</TableHeaderColumn>
+      <TableHeaderColumn dataField="start" dataFormat={timeFormatter}>Rostered Start</TableHeaderColumn>
+      <TableHeaderColumn dataField="shiftStart" dataFormat={timeFormatter}>Actual Start</TableHeaderColumn>
+      <TableHeaderColumn dataField="finish" dataFormat={timeFormatter}>Rostered Finish</TableHeaderColumn>
+      <TableHeaderColumn dataField="shiftFinish" dataFormat={timeFormatter}>Actual Finish</TableHeaderColumn>
     </BootstrapTable>
   )
 }
 
 PunctualityTable.propTypes = {
-  roster: React.PropTypes.array.isRequired
+  data: React.PropTypes.array.isRequired
 }
 
 export default PunctualityTable

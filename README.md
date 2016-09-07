@@ -22,8 +22,11 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 * React-router
 
 #### Noteworthy packages used
+* [react-redux-starter-kit](linkhere)
 * [redux-api-middleware](linkhere)
 * [react-bootstrap](linkhere)
 * [react-bootstrap-table](linkhere)
 
 #### Comments on Implementation
+* explain the use of selectors
+* extra functionality - bad data highlighted rows

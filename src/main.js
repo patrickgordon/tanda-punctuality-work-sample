@@ -4,7 +4,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {useRouterHistory} from 'react-router'
 import {syncHistoryWithStore} from 'react-router-redux'
 import createStore from './store/createStore'
-import {fetchRosterForDate} from './routes/Home/modules/roster'
+import {fetchRosterForDateInRange} from './routes/Home/modules/roster'
+import {fetchShiftForDateInRange} from './routes/Home/modules/shift'
 import AppContainer from './containers/AppContainer'
 
 // ========================================================
@@ -27,7 +28,8 @@ const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
 
-store.dispatch(fetchRosterForDate('2013-09-15'))
+store.dispatch(fetchRosterForDateInRange('2013-09-15', '2014-06-07'))
+store.dispatch(fetchShiftForDateInRange('2013-09-15', '2014-06-07'))
 
 // ========================================================
 // Developer Tools Setup

@@ -9,10 +9,13 @@ export default (store) => ({
       /*  Webpack - use require callback to define
        dependencies for bundling   */
       const Punctuality = require('./containers/HomeContainer').default
-      const reducer = require('./modules/roster').default
 
-      /*  Add the reducer to the store on key 'roster'  */
-      injectReducer(store, {key: 'roster', reducer})
+      var roster = require('./modules/roster').default
+      var shift = require('./modules/shift').default
+
+      /*  Add the reducers to the store on key 'roster' and 'shift'  */
+      injectReducer(store, {key: 'roster', reducer: roster})
+      injectReducer(store, {key: 'shift', reducer: shift})
 
       /*  Return getComponent   */
       cb(null, Punctuality)
