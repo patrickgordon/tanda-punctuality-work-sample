@@ -9,11 +9,12 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 * sinatra@
 
 #### Steps to get started
+1. Install Sinatra: `gem install sinatra`
 1. Install Sinatra-cross_origin: `gem install sinatra-cross_origin`
-2. Install dependencies, in root directory run: `npm install`
-3. Run sinatra server - `cd sinatra_web_server && ruby punctuality.rb`
-4. Run the front end - `npm run dev`
-5. Browse to [http://localhost:3000](http://localhost:3000)
+1. Install dependencies, in root directory run: `npm install`
+1. Run the back end: `cd sinatra_web_server && ruby punctuality.rb`
+1. Run the front end: `npm run dev`
+1. Browse to [http://localhost:3000](http://localhost:3000)
 
 #### Technology:
 * React

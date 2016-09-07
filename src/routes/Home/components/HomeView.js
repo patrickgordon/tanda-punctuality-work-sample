@@ -7,8 +7,9 @@ import Col from 'react-bootstrap/lib/Col'
 import Panel from 'react-bootstrap/lib/Panel'
 import Image from 'react-bootstrap/lib/Image'
 import moment from 'moment'
-import PunctualityTable from './PunctualityTable/PunctualityTable'
 import find from 'lodash/find'
+import PunctualityTable from './PunctualityTable/PunctualityTable'
+import PunctualityHeader from './PunctualityHeader/PunctualityHeader'
 
 export class HomeView extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class HomeView extends React.Component {
   }
 
   render() {
-    var {data} = this.props
+    var {data, stats} = this.props
 
     var panelHeader = (
       <Row>
@@ -73,6 +74,11 @@ export class HomeView extends React.Component {
         <Row>
           <Col xs={12}>
             <Panel header={panelHeader}>
+              <Row>
+                <Col xs={6} xsOffset={3}>
+                  <PunctualityHeader name="Harambe" stats={stats}/>
+                </Col>
+              </Row>
               <Row>
                 <Col xs={12}>
                   <PunctualityTable data={data} dayFormatter={this.dayFormatter}

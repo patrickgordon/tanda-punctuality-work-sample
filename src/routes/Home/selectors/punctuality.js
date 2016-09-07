@@ -10,7 +10,15 @@ const getShifts = (state) => state.shift.data
 export const getCombinedData = createSelector(
   [getRosters, getShifts],
   (rosters, shifts) => {
-    var rostersKeyedByDate = keyBy(rosters, 'date')
+
+    var rostersFormatted = forEach(rosters, (roster, key) => {
+      roster.rosterStart = roster.start
+      roster.rosterFinish = roster.finish
+      delete roster.start
+      delete roster.finish
+    })
+
+    var rostersKeyedByDate = keyBy(rostersFormatted, 'date')
 
     var shiftsFormatted = forEach(shifts, (shift, key) => {
       shift.shiftFinish = shift.finish
@@ -22,7 +30,7 @@ export const getCombinedData = createSelector(
 
     var data = []
     values(merge(rostersKeyedByDate, shiftsKeyedByDate)).map((row, index) => {
-      row.id = index+1
+      row.id = index + 1
       data.push(row)
     })
 
@@ -35,10 +43,32 @@ export const getInvalidDataRowIds = createSelector(
   (data) => {
     var invalidRows = []
     data.map((row, index) => {
-      if ((!row.shiftStart && !row.shiftFinish) || (!row.start && !row.finish)) {
+      if ((!row.shiftStart && !row.shiftFinish) || (!row.rosterStart && !row.rosterFinish)) {
         invalidRows.push(row.id)
       }
     })
     return invalidRows
+  }
+)
+
+export const getPunctualityStats = createSelector(
+  [getCombinedData],
+  (data) => {
+    var stats = {
+      punctual: 0,
+      arrivedLate: 0,
+      leftEarly: 0
+    }
+    data.map((row) => {
+      if (row.shiftStart <= row.rosterStart) {
+        stats.punctual += 1
+      } else if (row.shiftStart > row.rosterStart) {
+       stats.arrivedLate += 1
+      } else if (row.shiftFinish < row.rosterFinish) {
+        stats.leftEarly += 1
+      }
+    })
+
+    return stats
   }
 )

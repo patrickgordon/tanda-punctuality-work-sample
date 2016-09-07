@@ -8,9 +8,9 @@ export const PunctualityTable = (props) => {
     <BootstrapTable data={data} hover={true} condensed={true} trClassName={trClassFormat}>
       <TableHeaderColumn dataField="date" isKey={true} dataAlign="center" dataSort={true}
                          dataFormat={dayFormatter}>Day</TableHeaderColumn>
-      <TableHeaderColumn dataField="start" dataFormat={timeFormatter}>Rostered Start</TableHeaderColumn>
+      <TableHeaderColumn dataField="rosterStart" dataFormat={timeFormatter}>Rostered Start</TableHeaderColumn>
       <TableHeaderColumn dataField="shiftStart" dataFormat={timeFormatter}>Actual Start</TableHeaderColumn>
-      <TableHeaderColumn dataField="finish" dataFormat={timeFormatter}>Rostered Finish</TableHeaderColumn>
+      <TableHeaderColumn dataField="rosterFinish" dataFormat={timeFormatter}>Rostered Finish</TableHeaderColumn>
       <TableHeaderColumn dataField="shiftFinish" dataFormat={timeFormatter}>Actual Finish</TableHeaderColumn>
     </BootstrapTable>
   )
