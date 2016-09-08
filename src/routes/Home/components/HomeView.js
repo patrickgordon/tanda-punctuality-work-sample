@@ -49,7 +49,8 @@ export class HomeView extends React.Component {
   }
 
   render() {
-    var {data, stats} = this.props
+    var {data, stats, invalidDataRowIds} = this.props
+    stats.invalidRows = invalidDataRowIds.length
 
     var panelHeader = (
       <Row>

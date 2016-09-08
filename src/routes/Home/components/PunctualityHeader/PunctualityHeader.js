@@ -3,7 +3,7 @@ import Label from 'react-bootstrap/lib/Label'
 
 export const PunctualityHeader = (props) => {
   const {name, stats} = props
-  const {punctual, arrivedLate, leftEarly} = stats
+  const {punctual, arrivedLate, leftEarly, invalidRows} = stats
   return (
     <div className="text-center">
       <h3>{name}'s Punctuality</h3>
@@ -12,6 +12,7 @@ export const PunctualityHeader = (props) => {
           <Label>PUNCTUAL {punctual}</Label>&nbsp;
           <Label>ARRIVED LATE {arrivedLate}</Label>&nbsp;
           <Label>LEFT EARLY {leftEarly}</Label>&nbsp;
+          <Label>INVALID {invalidRows}</Label>
         </h4>
       </div>
     </div>
