@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './HomeView.scss'
+// import classes from './HomeView.scss'
 import harambe from '../assets/harambe.jpg'
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
@@ -56,13 +56,13 @@ export class HomeView extends React.Component {
       <Row>
         <Col xs={12}>
           <div>
-            <div className={classes['inline']}>
+            <div className="inline">
               <Image src={harambe} circle={true} style={{width: "50px", height: "50px", marginRight: "10px"}}/>
             </div>
-            <div className={classes['inline']}>
+            <div className="inline">
               <h4>Harambe</h4>
             </div>
-            <div className={classes['inline'] + " pull-right"}>
+            <div className="inline pull-right">
               <h4>buttons here</h4>
             </div>
           </div>
@@ -75,11 +75,7 @@ export class HomeView extends React.Component {
         <Row>
           <Col xs={12}>
             <Panel header={panelHeader}>
-              <Row>
-                <Col xs={6} xsOffset={3}>
-                  <PunctualityHeader name="Harambe" stats={stats}/>
-                </Col>
-              </Row>
+              <PunctualityHeader name="Harambe" stats={stats}/>
               <Row>
                 <Col xs={12}>
                   <PunctualityTable data={data} dayFormatter={this.dayFormatter}
