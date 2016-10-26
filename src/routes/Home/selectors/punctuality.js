@@ -7,6 +7,11 @@ import values from 'lodash/values'
 const getRosters = (state) => state.roster.data
 const getShifts = (state) => state.shift.data
 
+/***
+ * This selector gets all of the data for rosters and shifts and combines them to provide an array for the same date.
+ * It is composed using two other selectors (getRosters and getShifts) which just simply retrieve all records from
+ * state.
+ */
 export const getCombinedData = createSelector(
   [getRosters, getShifts],
   (rosters, shifts) => {
@@ -38,6 +43,11 @@ export const getCombinedData = createSelector(
   }
 )
 
+/***
+ * This selector is composed using the getCombinedData selector and checks to see if there are any issues with each
+ * date's data. That is, if there is no start & finish for roster or shift. It creates an array of id's to be used
+ * later by a style formatter for the table.
+ */
 export const getInvalidDataRowIds = createSelector(
   [getCombinedData],
   (data) => {
@@ -51,6 +61,10 @@ export const getInvalidDataRowIds = createSelector(
   }
 )
 
+/***
+ * This selector is composed using the getCombinedData selector and it computes the punctuality stats that are used
+ * in the labels that are displayed to the user.
+ */
 export const getPunctualityStats = createSelector(
   [getCombinedData],
   (data) => {
@@ -59,14 +73,25 @@ export const getPunctualityStats = createSelector(
       arrivedLate: 0,
       leftEarly: 0
     }
+
     data.map((row) => {
-      if (row.shiftStart <= row.rosterStart) {
-        stats.punctual += 1
-      } else if (row.shiftStart > row.rosterStart) {
-       stats.arrivedLate += 1
-      } else if (row.shiftFinish < row.rosterFinish) {
-        stats.leftEarly += 1
+      var arrivedLate = false
+      var leftEarly = false
+
+      if (row.shiftStart > row.rosterStart) {
+        stats.arrivedLate += 1
+        arrivedLate = true
       }
+
+      if (row.shiftFinish < row.rosterFinish) {
+        stats.leftEarly += 1
+        leftEarly = true
+      }
+
+      if (!arrivedLate && !leftEarly) {
+        stats.punctual += 1
+      }
+
     })
 
     return stats

@@ -8,8 +8,10 @@ import Panel from 'react-bootstrap/lib/Panel'
 import Image from 'react-bootstrap/lib/Image'
 import moment from 'moment'
 import find from 'lodash/find'
+import humanizeDuration from 'humanize-duration/humanize-duration'
 import PunctualityTable from './PunctualityTable/PunctualityTable'
 import PunctualityHeader from './PunctualityHeader/PunctualityHeader'
+import PunctualityCellFormatter from './PunctualityCellFormatter/PunctalityCellFormatter'
 
 export class HomeView extends React.Component {
   constructor(props) {
@@ -24,8 +26,32 @@ export class HomeView extends React.Component {
   }
 
   timeFormatter(cell, row) {
+    // console.log(cell)
+    // console.log(row)
     if (cell) {
-      return moment(cell).format('h:mma')
+      var formattedTime = moment(cell).format('h:mma')
+      var difference
+      var labelText
+
+      // This will format the finishing early
+      if ((row.shiftFinish) && (row.shiftFinish < row.rosterFinish) && (row.shiftFinish == cell)) {
+
+        // Calculate the difference and humanize it
+        difference = moment(row.rosterFinish).diff(moment(row.shiftFinish))
+        labelText = humanizeDuration(difference, {units: ['m'], round: true})
+
+        return <PunctualityCellFormatter toolTipKey={row.id} text="Left early" toolTipText={formattedTime}
+                                         labelText={labelText}/>
+      }
+
+      // This will format the starting late
+      if ((row.shiftStart) && (row.shiftStart > row.rosterStart) && (row.shiftStart == cell)) {
+        difference = moment(row.rosterStart).diff(moment(row.shiftStart))
+        labelText = humanizeDuration(difference, {units: ['m'], round: true})
+        return <PunctualityCellFormatter toolTipKey={row.id} text="Arrived late" toolTipText={formattedTime}
+                                         labelText={labelText}/>
+      }
+      return formattedTime
     }
     else {
       return 'No time clocked'

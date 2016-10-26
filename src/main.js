@@ -36,7 +36,7 @@ store.dispatch(fetchShiftForDateInRange('2013-09-15', '2014-06-07'))
 // ========================================================
 if (__DEBUG__) {
   if (window.devToolsExtension) {
-    window.devToolsExtension.open()
+    // window.devToolsExtension.open()
   }
 }
 
