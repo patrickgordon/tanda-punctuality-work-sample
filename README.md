@@ -5,8 +5,9 @@ This is my attempt at the 'punctuality' work sample for TANDA. It uses a variety
 It has been built as a "Single Page App" (SPA) but could just be also integrated in to a more traditional web app.
 
 #### Requirements to run:
-* npm@
-* sinatra@
+* npm @ at least 3.0.0 (tested with 3.3.12)
+* sinatra @ at least 1.4.7 (tested with this)
+* node @ at least 4.5.0 (tested with 5.5.0)
 
 #### Steps to get started
 1. Install Sinatra: `gem install sinatra`
@@ -23,10 +24,10 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 * React-router
 
 #### Noteworthy packages used
-* [react-redux-starter-kit](linkhere)
-* [redux-api-middleware](linkhere)
-* [react-bootstrap](linkhere)
-* [react-bootstrap-table](linkhere)
+* [react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit)
+* [redux-api-middleware](https://github.com/agraboso/redux-api-middleware)
+* [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap)
+* [react-bootstrap-table](https://github.com/AllenFang/react-bootstrap-table)
 
 #### Comments on Implementation
 * explain the use of selectors
