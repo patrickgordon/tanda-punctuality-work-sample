@@ -12,7 +12,7 @@ export const PunctualityCellFormatter = (props) => {
 
   return (
     <div>
-      {text} <OverlayTrigger placement="top" overlay={tooltip}><Label>{labelText}</Label></OverlayTrigger>
+      {text} <OverlayTrigger placement="top" overlay={tooltip}><Label bsStyle="danger">{labelText}</Label></OverlayTrigger>
     </div>
   )
 }

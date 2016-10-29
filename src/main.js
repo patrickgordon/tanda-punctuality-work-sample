@@ -28,8 +28,13 @@ const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
 
+//// For all records
 store.dispatch(fetchRosterForDateInRange('2013-09-15', '2014-06-07'))
 store.dispatch(fetchShiftForDateInRange('2013-09-15', '2014-06-07'))
+
+//// for testing
+// store.dispatch(fetchRosterForDateInRange('2013-10-01', '2013-10-30'))
+// store.dispatch(fetchShiftForDateInRange('2013-10-01', '2013-10-30'))
 
 // ========================================================
 // Developer Tools Setup

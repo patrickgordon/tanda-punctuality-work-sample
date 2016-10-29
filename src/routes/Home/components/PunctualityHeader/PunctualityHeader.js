@@ -2,16 +2,28 @@ import React from 'react';
 import Label from 'react-bootstrap/lib/Label'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
+import PunctualityChart from '../PunctualityChart/PunctualityChart'
 
 export const PunctualityHeader = (props) => {
-  const {name, stats} = props
-  const {punctual, arrivedLate, leftEarly, invalidRows} = stats
+  const {name, stats, numInvalidRows} = props
+  const {punctual, punctualPercent, notPunctualPercent, arrivedLate, leftEarly} = stats
+
+  var chartData = [
+    {x: [punctualPercent], y: punctualPercent, isPunctualityValue: true},
+    {x: [], y: notPunctualPercent, isPunctualityValue: false}
+  ]
+
   return (
     <Row>
       <Col xs={6} xsOffset={3}>
         <Row>
           <Col xs={12} className="text-center">
-            <h3>{name}'s Punctuality</h3>
+            <PunctualityChart data={chartData}/>
+            <div>
+              <p>
+                {name} was punctual {punctualPercent}% of the time.
+              </p>
+            </div>
           </Col>
         </Row>
 
@@ -34,7 +46,7 @@ export const PunctualityHeader = (props) => {
             </div>
             <div className="inline">
               <h4>
-                <Label>INVALID {invalidRows}</Label>
+                <Label>INVALID ROWS {numInvalidRows}</Label>
               </h4>
             </div>
           </Col>

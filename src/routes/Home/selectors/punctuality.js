@@ -70,29 +70,35 @@ export const getPunctualityStats = createSelector(
   (data) => {
     var stats = {
       punctual: 0,
+      punctualPercent: 0,
+      notPunctualPercent: 0,
       arrivedLate: 0,
-      leftEarly: 0
+      leftEarly: 0,
+      timeSaved: 0
     }
 
     data.map((row) => {
-      var arrivedLate = false
-      var leftEarly = false
+      if (row.shiftStart && row.shiftFinish) {
 
-      if (row.shiftStart > row.rosterStart) {
-        stats.arrivedLate += 1
-        arrivedLate = true
-      }
+        // For late arrivals
+        if (row.shiftStart > row.rosterStart) {
+          stats.arrivedLate += 1
+        } else {
+          stats.punctual += 1
+        }
 
-      if (row.shiftFinish < row.rosterFinish) {
-        stats.leftEarly += 1
-        leftEarly = true
-      }
-
-      if (!arrivedLate && !leftEarly) {
-        stats.punctual += 1
+        // For early finishers
+        if (row.shiftFinish < row.rosterFinish) {
+          stats.leftEarly += 1
+        } else {
+          stats.punctual += 1
+        }
       }
 
     })
+
+    stats.punctualPercent = (Math.round((stats.punctual / (stats.punctual + stats.leftEarly + stats.arrivedLate)) * 100) / 100) * 100
+    stats.notPunctualPercent = 100 - stats.punctualPercent
 
     return stats
   }

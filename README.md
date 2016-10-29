@@ -30,5 +30,11 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 * [react-bootstrap-table](https://github.com/AllenFang/react-bootstrap-table)
 
 #### Comments on Implementation
-* explain the use of selectors
-* extra functionality - bad data highlighted rows
+* The use of redux selectors (via the `reselect` library) makes determing computed values a breeze. This is how all the 
+statistics are calculated. This is also extremely fast as it only recalculates when the selector's arguments change.
+This is better than doing these calculations in the component as it would recalculate every time the state changed. 
+It also has other benefits, but in short: selectors are awesome.
+* I added some row highlighting / inclusion in 'stats' for "invalid rows". These are rows which have no time clocked for
+both the start and finish of roster and shift data.
+* I decided to omit the "Time Saved" section as there was not enough context in the spec to clearly understand what 
+this actually was and how it was being calculated.

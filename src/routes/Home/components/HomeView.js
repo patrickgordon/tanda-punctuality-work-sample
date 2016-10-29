@@ -1,5 +1,4 @@
 import React from 'react'
-// import classes from './HomeView.scss'
 import harambe from '../assets/harambe.jpg'
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
@@ -11,7 +10,7 @@ import find from 'lodash/find'
 import humanizeDuration from 'humanize-duration/humanize-duration'
 import PunctualityTable from './PunctualityTable/PunctualityTable'
 import PunctualityHeader from './PunctualityHeader/PunctualityHeader'
-import PunctualityCellFormatter from './PunctualityCellFormatter/PunctalityCellFormatter'
+import PunctualityCellFormatter from './PunctualityCellFormatter/PunctualityCellFormatter'
 
 export class HomeView extends React.Component {
   constructor(props) {
@@ -26,30 +25,40 @@ export class HomeView extends React.Component {
   }
 
   timeFormatter(cell, row) {
-    // console.log(cell)
-    // console.log(row)
     if (cell) {
       var formattedTime = moment(cell).format('h:mma')
       var difference
       var labelText
 
       // This will format the finishing early
-      if ((row.shiftFinish) && (row.shiftFinish < row.rosterFinish) && (row.shiftFinish == cell)) {
+      if (row.shiftFinish == cell) {
+        if ((row.shiftFinish) && (row.shiftFinish < row.rosterFinish)) {
 
-        // Calculate the difference and humanize it
-        difference = moment(row.rosterFinish).diff(moment(row.shiftFinish))
-        labelText = humanizeDuration(difference, {units: ['m'], round: true})
+          // Calculate the difference and humanize it
+          difference = moment(row.rosterFinish).diff(moment(row.shiftFinish))
+          labelText = humanizeDuration(difference, {units: ['m'], round: true})
 
-        return <PunctualityCellFormatter toolTipKey={row.id} text="Left early" toolTipText={formattedTime}
-                                         labelText={labelText}/>
+          return <PunctualityCellFormatter toolTipKey={row.id} text="Left early" toolTipText={formattedTime}
+                                           labelText={labelText}/>
+        } else {
+          if (row.rosterFinish) {
+            return 'On time'
+          }
+        }
       }
 
       // This will format the starting late
-      if ((row.shiftStart) && (row.shiftStart > row.rosterStart) && (row.shiftStart == cell)) {
-        difference = moment(row.rosterStart).diff(moment(row.shiftStart))
-        labelText = humanizeDuration(difference, {units: ['m'], round: true})
-        return <PunctualityCellFormatter toolTipKey={row.id} text="Arrived late" toolTipText={formattedTime}
-                                         labelText={labelText}/>
+      if (row.shiftStart == cell) {
+        if ((row.shiftStart) && (row.shiftStart > row.rosterStart)) {
+          difference = moment(row.rosterStart).diff(moment(row.shiftStart))
+          labelText = humanizeDuration(difference, {units: ['m'], round: true})
+          return <PunctualityCellFormatter toolTipKey={row.id} text="Arrived late" toolTipText={formattedTime}
+                                           labelText={labelText}/>
+        } else {
+          if (row.rosterStart) {
+            return 'On time'
+          }
+        }
       }
       return formattedTime
     }
@@ -76,7 +85,7 @@ export class HomeView extends React.Component {
 
   render() {
     var {data, stats, invalidDataRowIds} = this.props
-    stats.invalidRows = invalidDataRowIds.length
+    const numInvalidRows = invalidDataRowIds.length
 
     var panelHeader = (
       <Row>
@@ -101,7 +110,7 @@ export class HomeView extends React.Component {
         <Row>
           <Col xs={12}>
             <Panel header={panelHeader}>
-              <PunctualityHeader name="Harambe" stats={stats}/>
+              <PunctualityHeader name="Harambe" stats={stats} numInvalidRows={numInvalidRows}/>
               <Row>
                 <Col xs={12}>
                   <PunctualityTable data={data} dayFormatter={this.dayFormatter}

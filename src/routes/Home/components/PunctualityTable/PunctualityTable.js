@@ -5,7 +5,7 @@ import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 export const PunctualityTable = (props) => {
   const {data, dayFormatter, timeFormatter, trClassFormat} = props
   return (
-    <BootstrapTable data={data} hover={true} condensed={true} trClassName={trClassFormat}>
+    <BootstrapTable data={data} hover={true} condensed={true} trClassName={trClassFormat} pagination={true}>
       <TableHeaderColumn dataField="date" isKey={true} dataAlign="center" dataSort={true}
                          dataFormat={dayFormatter}>Day</TableHeaderColumn>
       <TableHeaderColumn dataField="rosterStart" dataFormat={timeFormatter}>Rostered Start</TableHeaderColumn>
