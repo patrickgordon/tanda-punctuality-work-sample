@@ -8,6 +8,7 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 * npm @ at least 3.0.0 (tested with 3.3.12)
 * sinatra @ at least 1.4.7 (tested with this)
 * node @ at least 4.5.0 (tested with 5.5.0)
+* I highly suggest using Chrome to view this
 
 #### Steps to get started
 1. Install Sinatra: `gem install sinatra`
@@ -16,6 +17,10 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 1. Run the back end: `cd sinatra_web_server && ruby punctuality.rb`
 1. Run the front end: `npm run dev`
 1. Browse to [http://localhost:3000](http://localhost:3000)
+
+#### Issues?
+* If you see no data then check your console log for fetch/cross origin issues. If this occurs, then please make sure
+you have installed the gem properly.
 
 #### Technology:
 * React
