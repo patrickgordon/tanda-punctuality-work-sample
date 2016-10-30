@@ -11,6 +11,7 @@ import humanizeDuration from 'humanize-duration/humanize-duration'
 import PunctualityTable from './PunctualityTable/PunctualityTable'
 import PunctualityHeader from './PunctualityHeader/PunctualityHeader'
 import PunctualityCellFormatter from './PunctualityCellFormatter/PunctualityCellFormatter'
+import PunctualityDateRangePicker from './PunctualityDateRangePicker/PunctualityDateRangePicker'
 
 export class HomeView extends React.Component {
   constructor(props) {
@@ -18,6 +19,11 @@ export class HomeView extends React.Component {
     this.dayFormatter = this.dayFormatter.bind(this)
     this.timeFormatter = this.timeFormatter.bind(this)
     this.trClassFormat = this.trClassFormat.bind(this)
+    this.handleDatePickerChange = this.handleDatePickerChange.bind(this)
+  }
+
+  handleDatePickerChange(dates) {
+    this.props.setDatesFilter(dates)
   }
 
   dayFormatter(cell, row) {
@@ -84,7 +90,8 @@ export class HomeView extends React.Component {
   }
 
   render() {
-    var {data, stats, invalidDataRowIds} = this.props
+    const {data, stats, invalidDataRowIds, ui} = this.props
+    const dateValues = ui.dates
     const numInvalidRows = invalidDataRowIds.length
 
     var panelHeader = (
@@ -97,8 +104,9 @@ export class HomeView extends React.Component {
             <div className="inline">
               <h4>Harambe</h4>
             </div>
-            <div className="inline pull-right">
-              <h4>buttons here</h4>
+            <div className="pull-right">
+              <PunctualityDateRangePicker values={dateValues}
+                                          handleChange={this.handleDatePickerChange}/>
             </div>
           </div>
         </Col>
@@ -110,7 +118,8 @@ export class HomeView extends React.Component {
         <Row>
           <Col xs={12}>
             <Panel header={panelHeader}>
-              <PunctualityHeader name="Harambe" stats={stats} numInvalidRows={numInvalidRows}/>
+              <PunctualityHeader name="Harambe" stats={stats} numInvalidRows={numInvalidRows}
+                                 dateValues={dateValues}/>
               <Row>
                 <Col xs={12}>
                   <PunctualityTable data={data} dayFormatter={this.dayFormatter}

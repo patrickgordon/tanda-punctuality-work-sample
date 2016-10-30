@@ -1,17 +1,18 @@
 import {connect} from 'react-redux'
-import {fetchRosterForDate} from '../modules/roster'
-import {getCombinedData, getInvalidDataRowIds, getPunctualityStats} from '../selectors/punctuality'
+import {setDatesFilter} from '../modules/ui'
+import {getFilteredData, getInvalidDataRowIds, getPunctualityStats} from '../selectors/punctuality'
 
 import HomeView from '../components/HomeView'
 
-const mapActionCreators = {
-  fetchRosterForDate: (date) => fetchRosterForDate(date)
-}
-
-const mapStateToProps = (state) => ({
-  data: getCombinedData(state),
-  invalidDataRowIds: getInvalidDataRowIds(state),
-  stats: getPunctualityStats(state)
+const mapDispatchToProps = (dispatch) => ({
+  setDatesFilter: (dates) => dispatch(setDatesFilter(dates))
 })
 
-export default connect(mapStateToProps, mapActionCreators)(HomeView)
+const mapStateToProps = (state) => ({
+  data: getFilteredData(state),
+  invalidDataRowIds: getInvalidDataRowIds(state),
+  stats: getPunctualityStats(state),
+  ui: state.ui
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeView)

@@ -5,8 +5,10 @@ import Col from 'react-bootstrap/lib/Col'
 import PunctualityChart from '../PunctualityChart/PunctualityChart'
 
 export const PunctualityHeader = (props) => {
-  const {name, stats, numInvalidRows} = props
+  const {name, stats, numInvalidRows, dateValues} = props
   const {punctual, punctualPercent, notPunctualPercent, arrivedLate, leftEarly} = stats
+  const {startDate, endDate} = dateValues
+  const dateDisplayFormat = 'D MMMM YYYY'
 
   var chartData = [
     {x: [punctualPercent], y: punctualPercent, isPunctualityValue: true},
@@ -21,7 +23,9 @@ export const PunctualityHeader = (props) => {
             <PunctualityChart data={chartData}/>
             <div>
               <p>
-                {name} was punctual {punctualPercent}% of the time.
+                Between <strong>{startDate && startDate.format(dateDisplayFormat).toString()}</strong> and
+                {" "}<strong>{endDate && endDate.format(dateDisplayFormat).toString()}</strong>
+                {", "}{name} was punctual {punctualPercent}% of the time.
               </p>
             </div>
           </Col>

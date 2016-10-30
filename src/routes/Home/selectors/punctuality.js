@@ -3,9 +3,12 @@ import keyBy from 'lodash/keyBy'
 import merge from 'lodash/merge'
 import forEach from 'lodash/forEach'
 import values from 'lodash/values'
+import sortBy from 'lodash/sortBy'
+import moment from 'moment'
 
 const getRosters = (state) => state.roster.data
 const getShifts = (state) => state.shift.data
+const getFilterDates = (state) => state.ui.dates
 
 /***
  * This selector gets all of the data for rosters and shifts and combines them to provide an array for the same date.
@@ -39,7 +42,25 @@ export const getCombinedData = createSelector(
       data.push(row)
     })
 
+    data = sortBy(data, 'date')
+
     return data
+  }
+)
+
+/***
+ * This selector filters the data using the date range specified in the calendar.
+ * It uses the getCombinedData selector and the getFilterDates selector as inputs.
+ *
+ * If there are no dates it just returns the full data set.
+ * If there is dates it returns dates between (and including) the provided dates
+ */
+export const getFilteredData = createSelector(
+  [getCombinedData, getFilterDates],
+  (data, dates) => {
+    return data.filter((row) => {
+      return ((moment(row.date) >= dates.startDate) && (moment(row.date) <= dates.endDate))
+    })
   }
 )
 
@@ -49,7 +70,7 @@ export const getCombinedData = createSelector(
  * later by a style formatter for the table.
  */
 export const getInvalidDataRowIds = createSelector(
-  [getCombinedData],
+  [getFilteredData],
   (data) => {
     var invalidRows = []
     data.map((row, index) => {
@@ -62,11 +83,11 @@ export const getInvalidDataRowIds = createSelector(
 )
 
 /***
- * This selector is composed using the getCombinedData selector and it computes the punctuality stats that are used
+ * This selector is composed using the getFilteredData selector and it computes the punctuality stats that are used
  * in the labels that are displayed to the user.
  */
 export const getPunctualityStats = createSelector(
-  [getCombinedData],
+  [getFilteredData],
   (data) => {
     var stats = {
       punctual: 0,
@@ -97,7 +118,9 @@ export const getPunctualityStats = createSelector(
 
     })
 
-    stats.punctualPercent = (Math.round((stats.punctual / (stats.punctual + stats.leftEarly + stats.arrivedLate)) * 100) / 100) * 100
+    var total = stats.punctual + stats.leftEarly + stats.arrivedLate
+
+    stats.punctualPercent = total != 0 ? (Math.round((stats.punctual / total) * 100) / 100) * 100 : 0
     stats.notPunctualPercent = 100 - stats.punctualPercent
 
     return stats

@@ -12,10 +12,12 @@ export default (store) => ({
 
       var roster = require('./modules/roster').default
       var shift = require('./modules/shift').default
+      var ui = require('./modules/ui').default
 
-      /*  Add the reducers to the store on key 'roster' and 'shift'  */
+      /*  Add the reducers to the store on key 'roster', 'shift', and 'ui'  */
       injectReducer(store, {key: 'roster', reducer: roster})
       injectReducer(store, {key: 'shift', reducer: shift})
+      injectReducer(store, {key: 'ui', reducer: ui})
 
       /*  Return getComponent   */
       cb(null, Punctuality)
