@@ -47,25 +47,30 @@ options "*" do
 end
 
 get '/' do
+  cross_origin
   erb :index
 end
 
 get '/roster/:date' do |date|
+  cross_origin
   content_type :json
   roster_data_for_dates(date, date)
 end
 
 get '/rosters/:from/:to' do |from, to|
+  cross_origin
   content_type :json
   roster_data_for_dates(from, to)
 end
 
 get '/shift/:date' do |date|
+  cross_origin
   content_type :json
   clockin_data_for_dates(date, date)
 end
 
 get '/shifts/:from/:to' do |from, to|
+  cross_origin
   content_type :json
   clockin_data_for_dates(from, to)
 end

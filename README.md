@@ -4,6 +4,8 @@ This is my attempt at the 'punctuality' work sample for TANDA. It uses a variety
 
 It has been built as a "Single Page App" (SPA) but could just be also integrated in to a more traditional web app.
 
+![Example](example.gif)
+
 #### Requirements to run:
 * npm @ at least 3.0.0 (tested with 3.3.12)
 * sinatra @ at least 1.4.7 (tested with this)
