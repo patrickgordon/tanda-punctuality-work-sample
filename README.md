@@ -14,7 +14,7 @@ It has been built as a "Single Page App" (SPA) but could just be also integrated
 
 #### Steps to get started
 1. Install Sinatra: `gem install sinatra`
-1. Install Sinatra-cross_origin: `gem install sinatra-cross_origin`
+1. Install Sinatra-cross_origin: `gem install sinatra-cross_origin --version 0.3.2`
 1. Install dependencies, in root directory run: `npm install`
 1. Run the back end: `cd sinatra_web_server && ruby punctuality.rb`
 1. Run the front end: `npm run dev`
